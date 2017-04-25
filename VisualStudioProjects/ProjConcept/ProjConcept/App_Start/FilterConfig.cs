@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using ProjConcept.CustomAuth;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ProjConcept
@@ -8,6 +9,8 @@ namespace ProjConcept
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new BasicAuthenticationAttribute());
+            filters.Add(new BasicAuthorizationAttribute());
         }
     }
 }

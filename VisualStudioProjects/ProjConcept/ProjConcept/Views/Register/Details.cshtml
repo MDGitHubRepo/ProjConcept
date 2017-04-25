@@ -1,0 +1,52 @@
+﻿@model ProjConcept.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthorizationLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthorizationLevel)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (ViewBag.ViewUser == Model.UserLoginId)
+    { @Html.ActionLink("Edit", "Edit", new { id = Model.UserLoginId }, new { @class = "btn btn-primary" }) }
+    @if (ViewBag.ViewControl.Admin)
+    { @Html.ActionLink("Back to List", "Index", null,new { @class = "btn btn-primary" }) }
+</p>
