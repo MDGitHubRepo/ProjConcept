@@ -37,7 +37,7 @@ namespace ProjConcept.CustomAuth
                 case "ReadOnly":
                     this.ReadOnly = true;
                     break;
-                case "Basic":
+                case "User":
                     this.EnableUserAuthorization("ReadOnly");
                     this.User = this.Create = this.Edit = this.Delete = true;
                     break;

@@ -12,12 +12,10 @@ namespace ProjConcept.Controllers
 {
     public class RegisterController : BaseController
     {
-        private ProjConceptEntities db = new ProjConceptEntities();
-
         // GET: Register
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(base.Database.Users.ToList());
         }
 
         // GET: Register/Details/5
@@ -25,12 +23,12 @@ namespace ProjConcept.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Home");
             }
-            User user = db.Users.Find(id);
+            User user = base.Database.Users.Find(id);
             if (user == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Home");
             }
             return View(user);
         }
@@ -83,9 +81,10 @@ namespace ProjConcept.Controllers
 
             if (ModelState.IsValid)
             {
+                user.CreatedDatetime = DateTime.Now;
                 user.AuthorizationLevel = 20; // User Authorization Level
-                db.Users.Add(user);
-                db.SaveChanges();
+                base.Database.Users.Add(user);
+                base.Database.SaveChanges();
                 CustomAuth.CookieManager.CreateCookie(HttpContext, user.UserLoginId);
                 return RedirectToAction("Index", "Home");
             }
@@ -98,12 +97,12 @@ namespace ProjConcept.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Home");
             }
-            User user = db.Users.Find(id);
+            User user = base.Database.Users.Find(id);
             if (user == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Home");
             }
 
             if (CustomAuth.CookieManager.GetUserLoginId(HttpContext.Request.Cookies) == user.UserLoginId)
@@ -124,8 +123,8 @@ namespace ProjConcept.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                base.Database.Entry(user).State = EntityState.Modified;
+                base.Database.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
             return View(user);
@@ -136,12 +135,12 @@ namespace ProjConcept.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Home");
             }
-            User user = db.Users.Find(id);
+            User user = base.Database.Users.Find(id);
             if (user == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Home");
             }
             return View(user);
         }
@@ -151,9 +150,9 @@ namespace ProjConcept.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            User user = base.Database.Users.Find(id);
+            base.Database.Users.Remove(user);
+            base.Database.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -161,7 +160,7 @@ namespace ProjConcept.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                base.Database.Dispose();
             }
             base.Dispose(disposing);
         }

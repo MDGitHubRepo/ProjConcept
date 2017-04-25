@@ -152,6 +152,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\UserNotesController.cs" />
     <Compile Include="CustomAuth\AuthorizeUser.cs" />
     <Compile Include="CustomAuth\BasicAuthenticationAttribute.cs" />
     <Compile Include="CustomAuth\BasicAuthorizationAttribute.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Models\UserNote.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserNoteMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +254,13 @@
     <Content Include="Views\Register\Login.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\UserNotes\Create.cshtml" />
+    <Content Include="Views\UserNotes\Delete.cshtml" />
+    <Content Include="Views\UserNotes\Details.cshtml" />
+    <Content Include="Views\UserNotes\Edit.cshtml" />
+    <Content Include="Views\UserNotes\Index.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Home\BadRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

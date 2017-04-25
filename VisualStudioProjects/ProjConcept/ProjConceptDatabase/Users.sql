@@ -4,5 +4,6 @@
     [LastName] NVARCHAR(30) NOT NULL, 
     [FirstName] NVARCHAR(30) NOT NULL, 
     [EmailAddress] NVARCHAR(254) NOT NULL, 
-    [AuthorizationLevel] TINYINT NOT NULL DEFAULT 0
+    [AuthorizationLevel] TINYINT NOT NULL DEFAULT 0, 
+    [CreatedDatetime] DATETIME2 NOT NULL DEFAULT GETDATE()
 )

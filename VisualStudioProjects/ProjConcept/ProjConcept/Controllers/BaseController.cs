@@ -39,6 +39,7 @@ namespace ProjConcept.Controllers
             catch (Exception e)
             {
                 this.LogException(e);
+                filterContext.Result = RedirectToAction("Error", "Home");
             }            
         }
 
@@ -50,8 +51,11 @@ namespace ProjConcept.Controllers
                 ErrorSource = e.Source,
                 ErrorStackTrace = e.StackTrace,
                 ErrorTimestamp = DateTime.Now,
-                ErrorUserId = "test"
+                ErrorUserId = String.IsNullOrWhiteSpace(ViewBag.ViewUser) ? "Anonymous" : ViewBag.ViewUser
             };
+
+            this.Database.ErrorLogs.Add(errorLog);
+            this.Database.SaveChanges();
         }
     }
 }

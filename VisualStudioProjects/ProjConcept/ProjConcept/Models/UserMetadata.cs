@@ -25,6 +25,7 @@ namespace ProjConcept.Models
         public string FirstName { get; set; }
         [Required, EmailAddress, Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
+        [Display(Name = "Authorization Level")]
         public byte AuthorizationLevel { get; set; }
     }
 }

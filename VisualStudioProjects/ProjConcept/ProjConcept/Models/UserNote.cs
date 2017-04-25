@@ -18,5 +18,6 @@ namespace ProjConcept.Models
         public string UserId { get; set; }
         public string Note { get; set; }
         public System.DateTime NoteLastUpdate { get; set; }
+        public string NoteTitle { get; set; }
     }
 }

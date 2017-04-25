@@ -79,6 +79,11 @@ namespace ProjConcept.CustomAuth
             this.userControllerAndActions.AddRange(this.readOnlyControllerAndActions);
             this.userControllerAndActions.Add(new KeyValuePair<string, string>("Register", "Logoff"));
             this.userControllerAndActions.Add(new KeyValuePair<string, string>("Register", "Edit"));
+
+            this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Index"));
+            this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Create"));
+            this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Edit"));
+            this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Delete"));
         }
 
         // Returns access authorization and applies control header

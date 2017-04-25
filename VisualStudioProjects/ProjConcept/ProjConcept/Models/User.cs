@@ -19,5 +19,6 @@ namespace ProjConcept.Models
         public string FirstName { get; set; }
         public string EmailAddress { get; set; }
         public byte AuthorizationLevel { get; set; }
+        public System.DateTime CreatedDatetime { get; set; }
     }
 }

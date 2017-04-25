@@ -9,21 +9,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ErrorMessage" Type="varchar(max)" Nullable="false" />
           <Property Name="ErrorSource" Type="varchar(max)" Nullable="false" />
           <Property Name="ErrorStackTrace" Type="varchar(max)" Nullable="false" />
-          <Property Name="ErrorTimestamp" Type="datetime" Nullable="false" />
+          <Property Name="ErrorTimestamp" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ErrorUserId" Type="nchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="UserNotes">
           <Key>
             <PropertyRef Name="NoteId" />
           </Key>
-          <Property Name="NoteId" Type="int" Nullable="false" />
+          <Property Name="NoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="NoteLastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="NoteLastUpdate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="NoteTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -34,6 +35,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="254" Nullable="false" />
           <Property Name="AuthorizationLevel" Type="tinyint" Nullable="false" />
+          <Property Name="CreatedDatetime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityContainer Name="ProjConceptDBModelStoreContainer">
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
@@ -45,10 +47,21 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ProjConceptDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ProjConceptEntities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="Users" EntityType="ProjConceptDBModel.User" />
           <EntitySet Name="ErrorLogs" EntityType="ProjConceptDBModel.ErrorLog" />
+          <EntitySet Name="Users" EntityType="ProjConceptDBModel.User" />
           <EntitySet Name="UserNotes" EntityType="ProjConceptDBModel.UserNote" />
         </EntityContainer>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorMessage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorSource" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorStackTrace" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ErrorTimestamp" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ErrorUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserLoginId" />
@@ -58,44 +71,24 @@
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="AuthorizationLevel" Type="Byte" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ErrorLog">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ErrorMessage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ErrorSource" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ErrorStackTrace" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ErrorTimestamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ErrorUserId" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CreatedDatetime" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="UserNote">
           <Key>
             <PropertyRef Name="NoteId" />
           </Key>
-          <Property Name="NoteId" Type="Int32" Nullable="false" />
+          <Property Name="NoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NoteLastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NoteLastUpdate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="NoteTitle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ProjConceptDBModelStoreContainer" CdmEntityContainer="ProjConceptEntities" >
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ProjConceptDBModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="AuthorizationLevel" ColumnName="AuthorizationLevel" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ErrorLogs">
             <EntityTypeMapping TypeName="ProjConceptDBModel.ErrorLog">
               <MappingFragment StoreEntitySet="ErrorLog">
@@ -108,9 +101,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ProjConceptDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="CreatedDatetime" ColumnName="CreatedDatetime" />
+                <ScalarProperty Name="AuthorizationLevel" ColumnName="AuthorizationLevel" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserNotes">
             <EntityTypeMapping TypeName="ProjConceptDBModel.UserNote">
               <MappingFragment StoreEntitySet="UserNotes">
+                <ScalarProperty Name="NoteTitle" ColumnName="NoteTitle" />
                 <ScalarProperty Name="NoteLastUpdate" ColumnName="NoteLastUpdate" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
