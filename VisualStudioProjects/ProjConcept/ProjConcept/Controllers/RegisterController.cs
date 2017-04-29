@@ -86,6 +86,7 @@ namespace ProjConcept.Controllers
                 base.Database.Users.Add(user);
                 base.Database.SaveChanges();
                 CustomAuth.CookieManager.CreateCookie(HttpContext, user.UserLoginId);
+                TempData["UserCreated"] = "True";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -119,7 +120,7 @@ namespace ProjConcept.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserLoginId,LastName,FirstName,EmailAddress")] User user)
+        public ActionResult Edit([Bind(Include = "UserLoginId,LastName,FirstName,EmailAddress,AuthorizationLevel")] User user)
         {
             if (ModelState.IsValid)
             {

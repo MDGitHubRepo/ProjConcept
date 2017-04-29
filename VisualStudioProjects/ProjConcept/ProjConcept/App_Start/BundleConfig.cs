@@ -26,6 +26,15 @@ namespace ProjConcept
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // Datatables.net scripts and styling.
+            bundles.Add(new ScriptBundle("~/bundles/DataTables").Include(
+                "~/Scripts/DataTables/jquery.dataTables.js"));
+
+            bundles.Add(new StyleBundle("~/Styles/DataTables").Include(
+                "~/Content/DataTables/css/jquery.dataTables.css"));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

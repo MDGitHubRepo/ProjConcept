@@ -33,7 +33,12 @@ namespace ProjConcept.CustomAuth
         /// <returns>If user is authorized for controller/action access.</returns>
         internal bool AuthorizeSecurityLevel(AuthorizationContext filterContext)
         {
-            this.ReloadUsersList();
+            // If user was created, then force a reload of user list from database for login.
+            if ((string)filterContext.Controller.TempData["UserCreated"] == "True")
+                this.ReloadUsersList(true);
+            else
+                this.ReloadUsersList();
+
             User webUser = null;
             if (this.dbAccessAvailable)
             {
@@ -84,6 +89,7 @@ namespace ProjConcept.CustomAuth
             this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Create"));
             this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Edit"));
             this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "Delete"));
+            this.userControllerAndActions.Add(new KeyValuePair<string, string>("UserNotes", "IndexDataTable"));
         }
 
         // Returns access authorization and applies control header
@@ -124,7 +130,7 @@ namespace ProjConcept.CustomAuth
         }
 
         // Loads user list from database.
-        private void ReloadUsersList()
+        private void ReloadUsersList(bool forceUpdate = false)
         {
             try
             {
@@ -133,7 +139,7 @@ namespace ProjConcept.CustomAuth
                     if (this.Users != null)
                     {
                         // Determine if the maximum amount of time has passed and recache the Users
-                        if (DateTime.Now.Subtract(this.LastDateTime).TotalSeconds > this.MaximumWebUsersCacheTimeSecs)
+                        if (DateTime.Now.Subtract(this.LastDateTime).TotalSeconds > this.MaximumWebUsersCacheTimeSecs || forceUpdate)
                         {
                             this.Users = db.Users.ToList();
                             foreach (User user in this.Users)

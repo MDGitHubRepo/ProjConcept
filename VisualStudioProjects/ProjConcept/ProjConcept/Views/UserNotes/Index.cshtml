@@ -6,10 +6,10 @@
 
 <p>
     @Html.ActionLink("Create New Note", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("View Datatable List", "IndexDataTable", null, new { @class = "btn btn-primary" })
 </p>
 @if (Model.Count() > 0)
 {
-
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <tr>

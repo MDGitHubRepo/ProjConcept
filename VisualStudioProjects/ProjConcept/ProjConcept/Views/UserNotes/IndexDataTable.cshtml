@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ProjConcept.Models.UserNote>
+
+@{ ViewBag.Title = "Notes"; }
+
+<h2>User's Notes</h2>
+
+<p>
+    @Html.ActionLink("Create New Note", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+@if (Model.Count() > 0)
+{
+    <table class="display cell-border stripe"  id="userNotes" style="display:none">
+        <thead> @* Required for DataTable.net usage. *@
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoteTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Note)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoteLastUpdate)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody> @* Required for DataTable.net usage. *@
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoteTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoteLastUpdate)
+                    </td>
+                    <td>
+                        <a class="glyphicon glyphicon-list" href=@Url.Action("Details", "UserNotes", new { id = item.NoteId })></a>
+                        <a class="glyphicon glyphicon-cog" href=@Url.Action("Edit", "UserNotes", new { id=item.NoteId })></a>
+                        <a class="glyphicon glyphicon-trash" href=@Url.Action("Delete", "UserNotes", new { id=item.NoteId })></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{ <h4>No note records found.</h4>}
+
+@section Styles {
+    @Styles.Render("~/Styles/DataTables")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/DataTables")
+    <script>
+        $(document).ready(function () {
+            //debugger;
+            $('#userNotes').dataTable();
+            $('#userNotes').show();
+        } );
+    </script>
+    }

@@ -15,11 +15,23 @@ namespace ProjConcept.Controllers
         // GET: UserNotes
         public ActionResult Index()
         {
+            // ViewUser is required to provide the correct data
             if (String.IsNullOrWhiteSpace(ViewBag.ViewUser))
-                return RedirectToAction("Unauthorized", "Home");
+                return RedirectToAction("BadRequest", "Home");
 
             string userId = ViewBag.ViewUser;
             return View(base.Database.UserNotes.Where(n=>n.UserId == userId).OrderBy(n=>n.NoteTitle).ToList());
+        }
+
+        // GET: UserNotes
+        public ActionResult IndexDataTable()
+        {
+            // ViewUser is required to provide the correct data
+            if (String.IsNullOrWhiteSpace(ViewBag.ViewUser))
+                return RedirectToAction("BadRequest", "Home");
+
+            string userId = ViewBag.ViewUser;
+            return View(base.Database.UserNotes.Where(n => n.UserId == userId).OrderBy(n => n.NoteTitle).ToList());
         }
 
         // GET: UserNotes/Details/5
@@ -40,8 +52,9 @@ namespace ProjConcept.Controllers
         // GET: UserNotes/Create
         public ActionResult Create()
         {
+            // ViewUser is required to provide the correct data
             if (String.IsNullOrWhiteSpace(ViewBag.ViewUser))
-                return RedirectToAction("Unauthorized", "Home");
+                return RedirectToAction("BadRequest", "Home");
 
             UserNote model = new UserNote() { UserId = ViewBag.ViewUser };
             return View(model);
